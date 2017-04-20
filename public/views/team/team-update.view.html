@@ -1,0 +1,62 @@
+<h1>Update {{model.team.name}}</h1>
+
+<label for="team-name">Team Name</label>
+  <input ng-model="model.team.name"
+         placeholder="{{model.team.name}}"
+         class="form-control"
+         id="team-name"/>
+
+  <label for="team-description">Team Description</label>
+  <textarea ng-model="model.team.description"
+            placeholder="{{model.team.description}}"
+            class="form-control"
+            id="team-description"></textarea>
+
+<label for="team-comp">Team Composition</label>
+<div ng-if="model.team.players.length < 6" class="row">
+  <a class="btn btn-primary" id="addPlayersButton" ng-click="model.openModal()">Add Player</a>
+</div>
+<div class="row col-xs-12" id="addPlayers">
+  <div ng-repeat="player in model.team.players">
+    <div id="playerDiv" class="thumbnail col-xs-4">
+      <div id="playerDivCaption" class="caption">
+        <h2>{{ player.hero }}</h2>
+        <h3>{{ player.player.username }}</h3>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/ng-template" id="modal.html">
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Player to Roster</h4>
+              </div>
+              <div class="modal-body">
+                <label for="player-name">Player Username</label>
+                <input ng-model="player.name"
+                       placeholder="Player Username"
+                       class="form-control"
+                       id="player-name"/>
+
+                <label for="player-hero">Hero</label>
+                  <select id="player-hero" ng-model="player.hero">
+                    <option ng-repeat="hero in heroes">{{hero}}</option>
+                  </select>
+              </div>
+              <div class="modal-footer">
+                <button id="addPlayerModalButton" type="button" ng-click="close(player)" class="btn btn-primary" data-dismiss="modal">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+ </script>
+
+<div class="row">
+  <a ng-click="model.updateTeam(model.teamId, team)" class="btn btn-success btn-block btn-space">Update</a>
+  <a href="#/{{model.coachId}}/team/{{model.teamId}}" class="btn btn-info btn-block btn-space">Cancel</a>
+  <a ng-click="model.removeTeam(model.teamId)" class="btn btn-danger btn-block btn-space">Delete</a>
+</div>

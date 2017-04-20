@@ -1,0 +1,19 @@
+.form-control, .btn-block {
+    margin-bottom: 10px;
+}
+
+.radio-buttons {
+  text-align: center;
+}
+
+.radio-buttons label {
+  font-size: 1.5em;
+}
+
+.bootstrap-select {
+  z-index: 2000;
+}
+
+#searchButton {
+  padding: 9px;
+}

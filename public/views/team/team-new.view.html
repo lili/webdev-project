@@ -1,0 +1,53 @@
+<h1>Create New Team Composition</h1>
+
+<label for="team-name">Team Name</label>
+  <input ng-model="team.name"
+         placeholder="Team Name"
+         class="form-control"
+         id="team-name"/>
+
+  <label for="team-description">Team Description</label>
+  <textarea ng-model="team.description"
+            placeholder="Team Description"
+            class="form-control"
+            id="team-description"></textarea>
+
+<label for="team-comp">Team Composition</label>
+<div class="row">
+  <a class="btn btn-primary" id="addPlayersButton" ng-click="model.openModal()">Add Player</a>
+</div>
+<div class="row col-xs-12" id="addPlayers">
+</div>
+
+<script type="text/ng-template" id="modal.html">
+         <div class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" ng-click="close('Cancel')" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Add Player to Roster</h4>
+              </div>
+              <div class="modal-body">
+                <label for="player-name">Player Username</label>
+                <input ng-model="player.name"
+                       placeholder="Player Username"
+                       class="form-control"
+                       id="player-name"/>
+
+                <label for="player-hero">Hero</label>
+                  <select id="player-hero" ng-model="player.hero">
+                    <option ng-repeat="hero in heroes">{{hero}}</option>
+                  </select>
+              </div>
+              <div class="modal-footer">
+                <button id="addPlayerModalButton" type="button" ng-click="close(player)" class="btn btn-primary" data-dismiss="modal">Add</button>
+              </div>
+            </div>
+          </div>
+        </div>
+ </script>
+
+<div class="row">
+  <a ng-click="model.createTeam(team)" class="btn btn-success btn-block btn-space">Create</a>
+  <a href="#/home" class="btn btn-warning btn-block btn-space">Cancel</a>
+</div>

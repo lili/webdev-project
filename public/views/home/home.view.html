@@ -1,0 +1,28 @@
+<h1>Home</h1>
+
+<span ng-show="currentUser">
+
+<h2>Welcome {{currentUser.username}}!</h2>
+
+Your Teams:
+<div ng-repeat="team in model.teams">
+  <a href="#/{{team.coach}}/team/{{team._id}}">
+    <div class="row panel panel-primary">
+      <div class="panel-heading">
+        <h3>{{team.name}}</h3>
+        <p>{{team.description}}</p>
+      </div>
+      <div class="panel-body">
+        <div ng-repeat="player in team.players">
+          <p>{{ player.player.username }} as {{ player.hero }}</p>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+
+<span class="row" ng-show="currentUser.roles.indexOf('coach') != -1">
+  <a class="btn btn-success" href="#/{{currentUser._id}}/team/new">Create New Team</a>
+</span>
+
+</span>

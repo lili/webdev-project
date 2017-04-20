@@ -1,0 +1,13 @@
+<h1>{{ model.team.name }}</h1>
+
+<h2>{{ model.team.description }}</h2>
+
+<h3>Created By {{ model.team.coach_name }}</h3>
+
+<div ng-repeat="player in model.team.players">
+  <h3>{{ player.player.username }} as {{player.hero}}</h3>
+</div>
+
+<div class="row">
+  <a href="#/{{model.team.coach}}/team/{{model.team._id}}/update" class="btn btn-success btn-block btn-space">Edit Team</a>
+</div>

@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>Search Teams by</h1>
+    <h1>
+      <form>
+        <div class="form-group col-xs-12">
+          <select class="form-control" ng-model="search.type" id="searchType">
+            <option>Name</option>
+            <option>Player</option>
+            <option>Hero</option>
+          </select>
+        </div>
+        <div class="row input-group">
+          <input type="text" class="form-control" ng-model="search.query" placeholder="Search">
+          <div class="input-group-btn">
+            <button class="btn btn-primary" id="searchButton" ng-click="model.searchTeams(search.type, search.query)">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </h1>
+  </div>
+
+  <div ng-show="model.foundTeams">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th class="col-xs-2">Name</th>
+          <th class="col-xs-2">Coach</th>
+          <th class="col-xs-7">Composition</th>
+          <th class="col-xs-1"></th>
+        </tr>
+      </thead>
+      <tbody ng-repeat="team in model.foundTeams">
+        <tr>
+          <td>{{team.name}}</td>
+          <td>{{team.coach}}</td>
+          <td>{{team.comp}}</td>
+          <td><a class="btn btn-info" href="#/{{team.coachId}}/team/{{team.teamId}}">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
