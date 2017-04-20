@@ -7,7 +7,13 @@ var cookieParser  = require('cookie-parser');
 var session       = require('express-session');
 var mongoose      = require('mongoose');
 
-mongoose.connect('mongodb://localhost/project');
+var connectionString = 'mongodb://localhost/project';
+
+if(process.env.MONGOLAB_PURPLE_URI) {
+    connectionString = process.env.MONGOLAB_PURPLE_URI;
+}
+
+mongoose.connect(connectionString);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
