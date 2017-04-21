@@ -23,6 +23,6 @@
   </div>
 </div>
 
-<div class="row" ng-show="model.team_and_user_match">
+<div class="row" ng-show="model.coachId == model.userId">
   <a href="#/{{model.team.coach}}/team/{{model.team._id}}/update" class="btn btn-success btn-block btn-space">Edit Team</a>
 </div>

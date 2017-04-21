@@ -10,7 +10,7 @@
       var vm = this;
       vm.coachId = $routeParams.userId;
       vm.teamId = $routeParams.teamId;
-      vm.userId = $rootScope.currentUser;
+      vm.userId = $rootScope.currentUser._id;
 
       vm.heroes = [];
       findAllHeroes($window);
@@ -28,16 +28,20 @@
         vm.numberOfPlayers = 0;
 
         findAllHeroes($window);
-        vm.team_and_user_match = team_and_user_match(vm.useId, vm.teamId);
+        vm.team_and_user_match = team_and_user_match(vm.userId, vm.teamId);
 
         vm.team = vm.viewDetailedTeam(vm.teamId);
       }
       init();
 
       function team_and_user_match(userId, teamId) {
+        console.log(userId)
         findTeam(teamId).then(function(team) {
           team = team.data;
           var coachId = team.coach;
+
+          console.log(coachId)
+          console.log(userId == coachId)
 
           return coachId == userId;
         });
