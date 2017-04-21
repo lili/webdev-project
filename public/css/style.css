@@ -2,6 +2,10 @@
     margin-bottom: 10px;
 }
 
+img {
+  width: 100%;
+}
+
 .radio-buttons {
   text-align: center;
 }

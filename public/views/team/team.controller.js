@@ -5,11 +5,12 @@
         .controller("TeamCtrl", TeamCtrl)
         .controller("ModalController", ModalController);
 
-    function TeamCtrl($routeParams, $scope, $q, $window, $location, TeamService, ModalService, UserService, HeroService)
+    function TeamCtrl($routeParams, $rootScope, $scope, $q, $window, $location, TeamService, ModalService, UserService, HeroService)
     {
       var vm = this;
       vm.coachId = $routeParams.userId;
       vm.teamId = $routeParams.teamId;
+      vm.userId = $rootScope.currentUser;
 
       vm.heroes = [];
       findAllHeroes($window);
@@ -21,13 +22,15 @@
       vm.openModal = openModal;
       vm.findTeam = findTeam;
       vm.viewDetailedTeam = viewDetailedTeam;
-      vm.playerInfo = [];
-      vm.numberOfPlayers = 0;
-      vm.team_and_user_match = team_and_user_match(vm.coachId, vm.teamId);
-
-      vm.team = vm.viewDetailedTeam(vm.teamId);
 
       function init() {
+        vm.playerInfo = [];
+        vm.numberOfPlayers = 0;
+
+        findAllHeroes($window);
+        vm.team_and_user_match = team_and_user_match(vm.useId, vm.teamId);
+
+        vm.team = vm.viewDetailedTeam(vm.teamId);
       }
       init();
 
