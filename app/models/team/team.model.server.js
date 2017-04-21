@@ -32,8 +32,8 @@ module.exports = function() {
     return api;
 
     function updateTeam(teamId, team) {
-            return TeamModel.update({_id: teamId}, {$set: team});
-        }
+        return TeamModel.update({_id: teamId}, {$set: team});
+    }
 
     function removeTeam(teamId) {
         return TeamModel.remove({_id: teamId});

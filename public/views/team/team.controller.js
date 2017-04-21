@@ -5,7 +5,7 @@
         .controller("TeamCtrl", TeamCtrl)
         .controller("ModalController", ModalController);
 
-    function TeamCtrl($routeParams, $scope, $window, $location, TeamService, ModalService, UserService, HeroService)
+    function TeamCtrl($routeParams, $scope, $q, $window, $location, TeamService, ModalService, UserService, HeroService)
     {
       var vm = this;
       vm.coachId = $routeParams.userId;
@@ -84,6 +84,12 @@
       function updateTeam(teamId, team) {
         var coachId = vm.coachId;
         team.comp = vm.playerInfo;
+        for (var i = 0; i < vm.team.players.length; i++) {
+          team.comp.push({hero: vm.team.players[i].hero, player: vm.team.players[i].player._id});
+        }
+        console.log("Team COMP!");
+        console.log(team.comp);
+
         console.log("updating team (controller): " + team);
         var update = TeamService.updateTeam(coachId, teamId, team);
 
@@ -159,15 +165,25 @@
               findCoach(vm.team['coach']).then(function(coach) {
                 coach = coach.data;
                 vm.team.coach_name = coach.username;
+                playerPromises = [];
+                playerNames = [];
 
                 for (var i = 0; i < vm.team.players.length; i++) {
                   var player = vm.team.players[i];
 
-                  findPlayerNameById(player['player']).then(function(playerName) {
+                  playerPromises.push(
+                    findPlayerNameById(player['player']).then(function(playerName) {
                     playerName = playerName.data;
-                    player['player'] = playerName;
-                  })
+                    playerNames.push(playerName);
+                  }));
                 }
+
+                $q.all(playerPromises).then(function() {
+                  for (var j = 0; j < playerNames.length; j++) {
+                    console.log(vm.team.players[j]);
+                    vm.team.players[j]['player'] = playerNames[j];
+                  }
+                });
               });
         });
       }
@@ -187,8 +203,6 @@
           var hero = members[i]['hero'];
           playerInfo[i]['player'] = player;
           playerInfo[i]['hero'] = hero;
-
-
         }
 
         return playerInfo;
