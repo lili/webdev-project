@@ -1,13 +1,28 @@
-<h1>{{ model.team.name }}</h1>
+<div class="jumbotron">
+  <h1>{{ model.team.name }}</h1>
 
-<h2>{{ model.team.description }}</h2>
+  <h2 id="teamDescription">{{ model.team.description }}</h2>
 
-<h3>Created By {{ model.team.coach_name }}</h3>
-
-<div ng-repeat="player in model.team.players">
-  <h3>{{ player.player.username }} as {{player.hero}}</h3>
+  <h3>
+    Created By
+    <span class="label label-primary">{{ model.team.coach_name }}</span>
+  </h3>
 </div>
 
-<div class="row">
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>Team Composition</h2>
+  </div>
+  <div class="panel-body">
+    <div ng-repeat="player in model.team.players">
+      <h3>
+        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+        {{ player.player.username }} as {{player.hero}}
+      </h3>
+    </div>
+  </div>
+</div>
+
+<div class="row" ng-show="model.coachId == model.userId">
   <a href="#/{{model.team.coach}}/team/{{model.team._id}}/update" class="btn btn-success btn-block btn-space">Edit Team</a>
 </div>

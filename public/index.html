@@ -27,8 +27,23 @@
     </head>
     <body ng-app="PassportApp">
         <div class="container">
-            <nav ng-controller="NavCtrl">
-              <a href="#home">Home</a> |
+            <nav ng-controller="NavCtrl" class="navbar navbar-inverse navbar-static-top">
+              <div class="container">
+                  <a class="navbar-brand">Overwatch Team Maker</a>
+                  <ul class="nav navbar-nav" routerLinkActive="active">
+                      <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                        <li ng-show="!currentUser" class="nav-item"><a class="nav-link" href="#login">Login</a></li>
+                        <li ng-show="!currentUser" class="nav-item"><a class="nav-link" href="#register">Register</a></li>
+                        <li ng-show="currentUser" class="nav-item"><a class="nav-link" href="#profile">Profile</a></li>
+                        <li ng-show="currentUser" class="nav-item"><a class="nav-link" href="#search">Search Teams</a></li>
+                        <li ng-show="currentUser && currentUser.roles.indexOf('admin') != -1"class="nav-item"><a class="nav-link" href="#admin">Admin Panel</a></li>
+                        <li ng-show="currentUser" class="nav-item"><a ng-click="logout()" class="nav-link" href="#logout">Logout</a></li>
+                  </ul>
+              </div>
+          </nav>
+
+            <!-- <nav ng-controller="NavCtrl">
+              <ul class="navbar navbar-inverse"><li><a href="#home">Home</a></li></ul>
               <span ng-show="!currentUser">
                   <a href="#login">Login</a> |
                   <a href="#register">Register</a>
@@ -41,7 +56,7 @@
                   </span>
                   <a href="#logout" ng-click="logout()">Logout</a>
               </span>
-            </nav>
+            </nav> -->
             <div ng-view>
             </div>
         </div>

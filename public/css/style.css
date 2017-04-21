@@ -2,6 +2,10 @@
     margin-bottom: 10px;
 }
 
+img {
+  width: 100%;
+}
+
 .radio-buttons {
   text-align: center;
 }
@@ -16,4 +20,13 @@
 
 #searchButton {
   padding: 9px;
+}
+
+#teamDescription {
+  font-style: italic;
+  color: gray;
+}
+
+.thumbnail {
+  margin: 10px;
 }

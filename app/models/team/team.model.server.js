@@ -32,8 +32,8 @@ module.exports = function() {
     return api;
 
     function updateTeam(teamId, team) {
-            return TeamModel.update({_id: teamId}, {$set: team});
-        }
+        return TeamModel.update({_id: teamId}, {$set: team});
+    }
 
     function removeTeam(teamId) {
         return TeamModel.remove({_id: teamId});
@@ -54,8 +54,8 @@ module.exports = function() {
     }
 
     function findTeamsByPlayer(playerName) {
-        return UserModel.find({username: playerName}).then(function(player) {
-            return TeamModel.find({ "comp.player": player.data['_id'] });
+        return UserModel.findOne({username: playerName}).then(function(player) {
+            return TeamModel.find({ "comp.player": player._id });
         });
     }
 

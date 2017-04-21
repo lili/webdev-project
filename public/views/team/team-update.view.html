@@ -16,9 +16,9 @@
 <div ng-if="model.team.players.length < 6" class="row">
   <a class="btn btn-primary" id="addPlayersButton" ng-click="model.openModal()">Add Player</a>
 </div>
-<div class="row col-xs-12" id="addPlayers">
+<div class="row col-xs-12 well" id="addPlayers">
   <div ng-repeat="player in model.team.players">
-    <div id="playerDiv" class="thumbnail col-xs-4">
+    <div id="playerDiv" class="thumbnail col-xs-5">
       <div id="playerDivCaption" class="caption">
         <h2>{{ player.hero }}</h2>
         <h3>{{ player.player.username }}</h3>
@@ -56,7 +56,7 @@
  </script>
 
 <div class="row">
-  <a ng-click="model.updateTeam(model.teamId, team)" class="btn btn-success btn-block btn-space">Update</a>
+  <a ng-click="model.updateTeam(model.teamId, model.team)" class="btn btn-success btn-block btn-space">Update</a>
   <a href="#/{{model.coachId}}/team/{{model.teamId}}" class="btn btn-info btn-block btn-space">Cancel</a>
   <a ng-click="model.removeTeam(model.teamId)" class="btn btn-danger btn-block btn-space">Delete</a>
 </div>

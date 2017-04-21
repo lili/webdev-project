@@ -5,11 +5,12 @@
         .controller("TeamCtrl", TeamCtrl)
         .controller("ModalController", ModalController);
 
-    function TeamCtrl($routeParams, $scope, $window, $location, TeamService, ModalService, UserService, HeroService)
+    function TeamCtrl($routeParams, $rootScope, $scope, $q, $window, $location, TeamService, ModalService, UserService, HeroService)
     {
       var vm = this;
       vm.coachId = $routeParams.userId;
       vm.teamId = $routeParams.teamId;
+      vm.userId = $rootScope.currentUser._id;
 
       vm.heroes = [];
       findAllHeroes($window);
@@ -21,20 +22,26 @@
       vm.openModal = openModal;
       vm.findTeam = findTeam;
       vm.viewDetailedTeam = viewDetailedTeam;
-      vm.playerInfo = [];
-      vm.numberOfPlayers = 0;
-      vm.team_and_user_match = team_and_user_match(vm.coachId, vm.teamId);
-
-      vm.team = vm.viewDetailedTeam(vm.teamId);
 
       function init() {
+        vm.playerInfo = [];
+        vm.numberOfPlayers = 0;
+
+        findAllHeroes($window);
+        vm.team_and_user_match = team_and_user_match(vm.userId, vm.teamId);
+
+        vm.team = vm.viewDetailedTeam(vm.teamId);
       }
       init();
 
       function team_and_user_match(userId, teamId) {
+        console.log(userId)
         findTeam(teamId).then(function(team) {
           team = team.data;
           var coachId = team.coach;
+
+          console.log(coachId)
+          console.log(userId == coachId)
 
           return coachId == userId;
         });
@@ -83,13 +90,20 @@
 
       function updateTeam(teamId, team) {
         var coachId = vm.coachId;
+        team.comp = vm.playerInfo;
+        for (var i = 0; i < vm.team.players.length; i++) {
+          team.comp.push({hero: vm.team.players[i].hero, player: vm.team.players[i].player._id});
+        }
+        console.log("Team COMP!");
+        console.log(team.comp);
 
+        console.log("updating team (controller): " + team);
         var update = TeamService.updateTeam(coachId, teamId, team);
 
         update.then(function(team) {
           team = team.data;
-
-          $location.url("/" + coachId + "/team/" + team._id);
+          console.log(team);
+          $location.url("/" + coachId + "/team/" + team);
         });
       }
 
@@ -131,7 +145,7 @@
       }
 
       function makeNewAddPlayer(foundPlayer, result) {
-        var playDiv = $("<div>", {id: "playerDiv", class: "thumbnail col-xs-4"});
+        var playDiv = $("<div>", {id: "playerDiv", class: "thumbnail col-xs-5"});
         var playDivInnerCaption = $("<div>", {id: "playerDivCaption", class: "caption"});
         var playerHero = "<h2>" + result.hero + "</h2>";
         var playerName = "<h3>" + foundPlayer['username'] + "</h3>";
@@ -158,15 +172,25 @@
               findCoach(vm.team['coach']).then(function(coach) {
                 coach = coach.data;
                 vm.team.coach_name = coach.username;
+                playerPromises = [];
+                playerNames = [];
 
                 for (var i = 0; i < vm.team.players.length; i++) {
                   var player = vm.team.players[i];
 
-                  findPlayerNameById(player['player']).then(function(playerName) {
+                  playerPromises.push(
+                    findPlayerNameById(player['player']).then(function(playerName) {
                     playerName = playerName.data;
-                    player['player'] = playerName;
-                  })
+                    playerNames.push(playerName);
+                  }));
                 }
+
+                $q.all(playerPromises).then(function() {
+                  for (var j = 0; j < playerNames.length; j++) {
+                    console.log(vm.team.players[j]);
+                    vm.team.players[j]['player'] = playerNames[j];
+                  }
+                });
               });
         });
       }
@@ -186,8 +210,6 @@
           var hero = members[i]['hero'];
           playerInfo[i]['player'] = player;
           playerInfo[i]['hero'] = hero;
-
-
         }
 
         return playerInfo;
