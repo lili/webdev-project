@@ -17,3 +17,8 @@
 #searchButton {
   padding: 9px;
 }
+
+#teamDescription {
+  font-style: italic;
+  color: gray;
+}

@@ -1,11 +1,16 @@
-<h1>{{ model.team.name }}</h1>
+<div class="jumbotron">
+  <h1>{{ model.team.name }}</h1>
 
-<h2>{{ model.team.description }}</h2>
+  <h2 id="teamDescription">{{ model.team.description }}</h2>
 
-<h3>Created By {{ model.team.coach_name }}</h3>
+  <h3>
+    Created By
+    <span class="label label-primary">{{ model.team.coach_name }}</span>
+  </h3>
+</div>
 
 <div ng-repeat="player in model.team.players">
-  <h3>{{ player.player }} as {{player.hero}}</h3>
+  <h3>{{ player.player.username }} as {{player.hero}}</h3>
 </div>
 
 <div class="row">
