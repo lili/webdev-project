@@ -83,13 +83,14 @@
 
       function updateTeam(teamId, team) {
         var coachId = vm.coachId;
-
+        team.comp = vm.playerInfo;
+        console.log("updating team (controller): " + team);
         var update = TeamService.updateTeam(coachId, teamId, team);
 
         update.then(function(team) {
           team = team.data;
-
-          $location.url("/" + coachId + "/team/" + team._id);
+          console.log(team);
+          $location.url("/" + coachId + "/team/" + team);
         });
       }
 

@@ -21,7 +21,7 @@
     <div id="playerDiv" class="thumbnail col-xs-4">
       <div id="playerDivCaption" class="caption">
         <h2>{{ player.hero }}</h2>
-        <h3>{{ player.player.username }}</h3>
+        <h3>{{ player.player }}</h3>
       </div>
     </div>
   </div>
@@ -56,7 +56,7 @@
  </script>
 
 <div class="row">
-  <a ng-click="model.updateTeam(model.teamId, team)" class="btn btn-success btn-block btn-space">Update</a>
+  <a ng-click="model.updateTeam(model.teamId, model.team)" class="btn btn-success btn-block btn-space">Update</a>
   <a href="#/{{model.coachId}}/team/{{model.teamId}}" class="btn btn-info btn-block btn-space">Cancel</a>
   <a ng-click="model.removeTeam(model.teamId)" class="btn btn-danger btn-block btn-space">Delete</a>
 </div>

@@ -4,12 +4,13 @@
         .module("PassportApp")
         .controller("HomeController", HomeController);
 
-    function HomeController($rootScope, TeamService, UserService)
+    function HomeController($rootScope, $q, TeamService, UserService)
     {
       var vm = this;
       vm.findPlayerNameById = findPlayerNameById;
 
-      if ($rootScope.currentUser) {
+      function init() {
+        if ($rootScope.currentUser) {
         vm.teams = [];
         var coach = $rootScope.currentUser._id;
 
@@ -22,39 +23,48 @@
           }
         });
       }
-
-      function init() {
       }
       init();
 
       function findTeamById(teamId) {
-
         TeamService
           .findTeamById(teamId)
-          .then(
-                  function(response) {
-                      var foundTeam = response.data;
-                      foundTeam['players'] = findPlayersByTeam(foundTeam);
+          .then(function(response) {
+              var foundTeam = response.data;
+              foundTeam['players'] = findPlayersByTeam(foundTeam);
 
-                      for (var i = 0; i < foundTeam['players'].length; i++) {
-                        var player = foundTeam['players'][i];
+              var playerPromises = [];
+              var playerNames = [];
+              for (var i = 0; i < foundTeam['players'].length; i++) {
+                var player = foundTeam['players'][i];
+                var playerId = player['player'];
+                playerPromises.push(findPlayerNameById(playerId).then(function(data) {
+                  playerNames.push(data);
+                }));
+                playerPromises.push(player['player']);
+              }
 
-                        findPlayerNameById(player['player']).then(function(playerName) {
-                          playerName = playerName.data;
-                          player['player'] = playerName;
-                        })
-                      }
+              $q.all(playerPromises).then(function() {
+                for (var j = 0; j < playerNames.length; j++) {
+                  foundTeam['players'][j]['player'] = playerNames[j];
+                }
+                vm.teams.push(foundTeam);
+              });
+              //console.log("PN: " + playerNames);
 
-                      vm.teams.push(foundTeam);
-                  },
-                  function(err) {
-                      vm.error = err;
-                  }
-                );
+              //vm.teams.push(foundTeam);
+          },
+          function(err) {
+              vm.error = err;
+          }
+        );
       }
 
       function findPlayerNameById(playerId) {
-        return UserService.findUserById(playerId);
+        return UserService.findUserById(playerId).then(function(playerName) {
+          playerName = playerName.data;
+          return playerName['username'];
+        });
       }
 
       function findPlayersByTeam(team) {

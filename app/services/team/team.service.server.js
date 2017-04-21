@@ -1,3 +1,4 @@
+var util = require("util");
 var mongoose = require("mongoose");
 
 module.exports = function(app) {
@@ -119,16 +120,14 @@ module.exports = function(app) {
         var newTeam = req.body;
         var teamId = req.params['teamId'];
 
-        console.log("Team: " + newTeam)
-        console.log("Team ID: " + teamId)
-
         TeamModel
             .updateTeam(teamId, newTeam)
             .then(
                 function(team){
-                    return teamModel.findAllTeams();
+                    return teamId;
                 },
                 function(err){
+                    console.log("updateTeam() err: " + err);
                     res.status(400).send(err);
                 }
             )
@@ -137,6 +136,7 @@ module.exports = function(app) {
                     res.json(teams);
                 },
                 function(err){
+                    console.log("updateTeam() err: " + err);
                     res.status(400).send(err);
                 }
             );

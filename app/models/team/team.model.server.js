@@ -54,8 +54,8 @@ module.exports = function() {
     }
 
     function findTeamsByPlayer(playerName) {
-        return UserModel.find({username: playerName}).then(function(player) {
-            return TeamModel.find({ "comp.player": player.data['_id'] });
+        return UserModel.findOne({username: playerName}).then(function(player) {
+            return TeamModel.find({ "comp.player": player._id });
         });
     }
 

@@ -22,6 +22,7 @@
         }
 
         function updateTeam(userId, teamId, team) {
+            console.log("updating team: " + team);
             return $http.put('/api/' + userId + '/team/'+ teamId + '/update', team);
         }
 
