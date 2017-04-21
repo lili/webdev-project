@@ -1,22 +1,26 @@
-<h1>Create New Team Composition</h1>
+<h1>Create New Team</h1>
 
-<label for="team-name">Team Name</label>
-  <input ng-model="team.name"
-         placeholder="Team Name"
-         class="form-control"
-         id="team-name"/>
+<div class="panel-default">
+  <div class="panel-body">
+    <label for="team-name">Team Name</label>
+    <input ng-model="team.name"
+           placeholder="Team Name"
+           class="form-control"
+           id="team-name"/>
 
-  <label for="team-description">Team Description</label>
-  <textarea ng-model="team.description"
-            placeholder="Team Description"
-            class="form-control"
-            id="team-description"></textarea>
+    <label for="team-description">Team Description</label>
+    <textarea ng-model="team.description"
+              placeholder="Team Description"
+              class="form-control"
+              id="team-description"></textarea>
 
-<label for="team-comp">Team Composition</label>
-<div class="row">
-  <a class="btn btn-primary" id="addPlayersButton" ng-click="model.openModal()">Add Player</a>
-</div>
-<div class="row col-xs-12" id="addPlayers">
+    <label for="team-comp">Team Composition</label>
+    <div class="row">
+      <a class="btn btn-primary" id="addPlayersButton" ng-click="model.openModal()">Add Player</a>
+    </div>
+    <div class="row col-xs-12 well" id="addPlayers">
+    </div>
+  </div>
 </div>
 
 <script type="text/ng-template" id="modal.html">

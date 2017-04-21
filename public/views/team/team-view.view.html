@@ -9,8 +9,18 @@
   </h3>
 </div>
 
-<div ng-repeat="player in model.team.players">
-  <h3>{{ player.player.username }} as {{player.hero}}</h3>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h2>Team Composition</h2>
+  </div>
+  <div class="panel-body">
+    <div ng-repeat="player in model.team.players">
+      <h3>
+        <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+        {{ player.player.username }} as {{player.hero}}
+      </h3>
+    </div>
+  </div>
 </div>
 
 <div class="row">

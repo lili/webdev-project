@@ -132,7 +132,7 @@
       }
 
       function makeNewAddPlayer(foundPlayer, result) {
-        var playDiv = $("<div>", {id: "playerDiv", class: "thumbnail col-xs-4"});
+        var playDiv = $("<div>", {id: "playerDiv", class: "thumbnail col-xs-3 col-xs-offset-1"});
         var playDivInnerCaption = $("<div>", {id: "playerDivCaption", class: "caption"});
         var playerHero = "<h2>" + result.hero + "</h2>";
         var playerName = "<h3>" + foundPlayer['username'] + "</h3>";

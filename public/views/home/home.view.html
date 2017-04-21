@@ -1,28 +1,34 @@
-<h1>Home</h1>
-
 <span ng-show="currentUser">
 
-<h2>Welcome {{currentUser.username}}!</h2>
+<div class="jumbotron">
+  <h1>Welcome {{currentUser.username}}!</h1>
+</div>
 
-Your Teams:
-<div ng-repeat="team in model.teams">
-  <a href="#/{{team.coach}}/team/{{team._id}}">
-    <div class="row panel panel-primary">
-      <div class="panel-heading">
-        <h3>{{team.name}}</h3>
-        <p>{{team.description}}</p>
-      </div>
-      <div class="panel-body">
-        <div ng-repeat="player in team.players">
-          <p>{{ player.player }} as {{ player.hero }}</p>
+<div class="panel panel-success">
+  <div class="panel-heading">
+    <h2>Your Teams</h2>
+  </div>
+  <div class="panel-body">
+    <div class="col-xs-5 col-xs-offset-1 teamBlocks" ng-repeat="team in model.teams">
+      <a href="#/{{team.coach}}/team/{{team._id}}">
+        <div class="row panel panel-primary">
+          <div class="panel-heading">
+            <h3>{{team.name}}</h3>
+            <p>{{team.description}}</p>
+          </div>
+          <div class="panel-body">
+            <div ng-repeat="player in team.players">
+              <p>{{ player.player }} as {{ player.hero }}</p>
+            </div>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
-  </a>
+  </div>
 </div>
 
 <span class="row" ng-show="currentUser.roles.indexOf('coach') != -1">
-  <a class="btn btn-success" href="#/{{currentUser._id}}/team/new">Create New Team</a>
+  <a class="btn btn-success btn-block btn-space" href="#/{{currentUser._id}}/team/new">Create New Team</a>
 </span>
 
 </span>
