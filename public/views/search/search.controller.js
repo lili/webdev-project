@@ -35,7 +35,7 @@
                     coachPromises.push(UserService.findUserById(coachId).then(function(coach) {
                         coach = coach.data;
                         coachNames.push(coach.username);
-                        coachIds.push(coach.id);
+                        coachIds.push(coach._id);
                     }));
                 }
 
