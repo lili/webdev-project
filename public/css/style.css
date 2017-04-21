@@ -26,3 +26,7 @@ img {
   font-style: italic;
   color: gray;
 }
+
+.thumbnail {
+  margin: 10px;
+}
