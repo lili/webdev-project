@@ -11,6 +11,10 @@ module.exports = function() {
             comp: [{
                 hero: String,
                 player: {type: mongoose.Schema.Types.ObjectId, ref:"UserModel"}
+            }],
+            comments: [{
+                user: String,
+                content: String
             }]
         }, {collection: "team"});
 

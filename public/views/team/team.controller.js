@@ -11,9 +11,9 @@
       vm.coachId = $routeParams.userId;
       vm.teamId = $routeParams.teamId;
       vm.userId = $rootScope.currentUser._id;
+      vm.userName = $rootScope.currentUser.username;
 
       vm.heroes = [];
-      findAllHeroes($window);
 
       vm.findCoach = findCoach;
       vm.createTeam = createTeam;
@@ -22,6 +22,7 @@
       vm.openModal = openModal;
       vm.findTeam = findTeam;
       vm.viewDetailedTeam = viewDetailedTeam;
+      vm.commentOnTeam = commentOnTeam;
 
       function init() {
         vm.playerInfo = [];
@@ -168,6 +169,7 @@
               foundTeam = foundTeam.data;
               vm.team = foundTeam;
               vm.team.players = findPlayersByTeam(foundTeam);
+              vm.team.comments = foundTeam['comments'];
 
               findCoach(vm.team['coach']).then(function(coach) {
                 coach = coach.data;
@@ -228,6 +230,13 @@
 
           wndw.sessionStorage.setItem("heroes", herolist);
         });
+      }
+
+      function commentOnTeam(comment) {
+        var commentObj = {user: vm.userName, content: comment};
+        vm.team.comments.push(commentObj);
+
+        updateTeam(vm.teamId, vm.team);
       }
     }
 

@@ -23,6 +23,22 @@
   </div>
 </div>
 
+<div class="row">
+  <label for="team-comments">Comment on this team:</label>
+    <input ng-model="newComment"
+           placeholder="What do you think?"
+           class="form-control"
+           id="team-comments"/>
+    <button class="btn btn-info" ng-click="model.commentOnTeam(newComment)"> Add Comment
+    </button>
+</div>
+
+<div class="row" ng-repeat="comment in model.team.comments">
+  <div class="well">
+    <p><b>{{comment.user}}:</b> {{comment.content}}</p>
+  </div>
+</div>
+
 <div class="row" ng-show="model.coachId == model.userId">
   <a href="#/{{model.team.coach}}/team/{{model.team._id}}/update" class="btn btn-success btn-block btn-space">Edit Team</a>
 </div>
